@@ -2,7 +2,7 @@
 **Fetch is promise-based** and provides a better alternative that can be easily used in service workers. 
 Fetch also integrates advanced HTTP concepts such as CORS and other extensions to HTTP.
 
-```
+```javascript
 async function logMovies() {
   const response = await fetch("http://example.com/movies.json");
   const movies = await response.json();
@@ -17,7 +17,7 @@ So, **to extract the JSON body content from the Response object, we use the json
 
 The **fetch() method can optionally accept a second parameter, an init object** that allows you to control a number of different settings:
 
-```
+```javascript
 // Example POST method implementation:
 async function postData(url = "", data = {}) {
   // Default options are marked with *
@@ -46,7 +46,7 @@ postData("https://example.com/answer", { answer: 42 }).then((data) => {
 
 An accurate check for a successful fetch() would include checking that the promise resolved, then **checking that the Response.ok property has a value of true**.
 
-```
+```javascript
 async function fetchImage() {
   try {
     const response = await fetch("flowers.jpg");
