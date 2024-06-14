@@ -8,6 +8,7 @@
 - [Config Defaults](#config-defaults)
 - [Interceptors](#interceptors)
 - [Handling Errors](#handling-errors)
+- [Cancellation](#cancellation)
 
 ## What is Axios?
 
@@ -466,4 +467,50 @@ axios.get('/user/12345', {
     return status < 500; // Resolve only if the status code is less than 500
   }
 })
+```
+
+## Cancellation
+
+**Cancelling requests**
+Setting the timeout property in an axios call handles response related timeouts.
+
+In some cases (e.g. network connection becomes unavailable) an axios call would benefit from cancelling the connection early. Without cancellation, the axios call can hang until the parent code/stack times out (might be a few minutes in a server-side applications).
+
+To terminate an axios call you can use following methods:
+
+* signal
+* cancelToken (deprecated)
+
+Combining timeout and cancellation method (e.g. signal) should cover response related timeouts AND connection related timeouts.
+
+signal: AbortController
+Starting from v0.22.0 Axios supports AbortController to cancel requests in fetch API way:
+
+```javascript
+const controller = new AbortController();
+
+axios.get('/foo/bar', {
+   signal: controller.signal
+}).then(function(response) {
+   //...
+});
+// cancel the request
+controller.abort()
+```
+
+Example with a timeout helper function:
+
+```javascript
+function newAbortSignal(timeoutMs) {
+  const abortController = new AbortController();
+  setTimeout(() => abortController.abort(), timeoutMs || 0);
+
+  return abortController.signal;
+}
+
+axios.get('/foo/bar', {
+   signal: newAbortSignal(5000) //Aborts request after 5 seconds
+}).then(function(response) {
+   //...
+});
 ```
