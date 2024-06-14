@@ -1,3 +1,12 @@
+## Table of Contents
+
+- [AbortController](#abortcontroller)
+- [Handling Search with AbortController](#handling-search-with-abortcontroller)
+- [React example](#react-example)
+- [Debounce & AbortController](#debounce-&-abortcontroller)
+
+## AbortController
+
 **The AbortController interface represents a controller object that allows you to abort one or more Web requests** as and when desired.
 
 **Constructor**
@@ -84,7 +93,9 @@ It's better than the previous approach.
 **How can we handle this?**
 This is where AbortController comes in handy. We can use AbortController to cancel the already initiated request(using fetch). The modern browsers come with a built-in AbortController interface.
 
-```
+## Handling Search with AbortController
+
+```html
 <html>
   <body>
     <input id="search" type="number" />
@@ -126,9 +137,9 @@ This is where AbortController comes in handy. We can use AbortController to canc
 </html>
 ```
 
-**React example**
+## React example
 
-```
+```javascript
 useEffect(() => {
   const controller = new AbortController();
   const signal = controller.signal;
@@ -157,8 +168,12 @@ useEffect(() => {
   };
 }, []);
 ```
+
+## Debounce & AbortController
+
 **Here is the sample example for Debounce & AbortController using Fetch methods**
-```
+
+```html
 <html>
   <body>
     <input id="search" type="number" />
